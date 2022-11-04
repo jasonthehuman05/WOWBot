@@ -29,7 +29,6 @@ namespace WOWBot
             //Create the discord client and wire up all needed events
             client = new DiscordSocketClient();
             client.Log += DiscordLog;
-            client.Disconnected += ConnectionLost;
             client.Ready += BotReady;
             //client.MessageReceived += NewMessage;
             client.SlashCommandExecuted += commandHandler.CommandExecuted;
@@ -58,19 +57,6 @@ namespace WOWBot
             await client.CreateGlobalApplicationCommandAsync(scp);
 
             Console.WriteLine("Command Registered!");
-        }
-
-        private static Task ConnectionLost(Exception arg) //Reconnects the bot
-        {
-            Console.WriteLine("BOT ATTEMPTING TO RECONNECT!");
-            ConnectBot();
-            return Task.CompletedTask;
-        }
-
-        static async void ConnectBot() //Establishes connection to discord
-        {
-            await client.LoginAsync(TokenType.Bot, token);
-            await client.StartAsync();
         }
 
         private static Task DiscordLog(LogMessage arg)
