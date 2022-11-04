@@ -37,11 +37,13 @@ namespace WOWBot
 
         public async Task<Task> DoAction(SocketSlashCommand arg)
         {
+            arg.DeferAsync();
             List<Wow> responseWow = WowFetcher.GetWow(); // Gets a wow from the API
 
             string url = Shortener.ShortenUrl(responseWow[0].video._1080p);
 
-            arg.RespondAsync(url);
+            //await arg.RespondAsync(url);
+            await arg.FollowupAsync(url);
 
             return Task.CompletedTask;
         }

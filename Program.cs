@@ -31,7 +31,7 @@ namespace WOWBot
             client.Log += DiscordLog;
             client.Disconnected += ConnectionLost;
             client.Ready += BotReady;
-            client.MessageReceived += NewMessage;
+            //client.MessageReceived += NewMessage;
             client.SlashCommandExecuted += commandHandler.CommandExecuted;
 
             //Attempt first log in
@@ -46,7 +46,7 @@ namespace WOWBot
 
         private static Task NewMessage(SocketMessage arg)
         {
-            Console.WriteLine($"{arg.Channel}/{arg.Author} == {arg.Content}");
+            //Console.WriteLine($"{arg.Channel}/{arg.Author} == {arg.Content}");
             return Task.CompletedTask;
         }
 
