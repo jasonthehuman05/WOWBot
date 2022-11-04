@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 
+
 namespace WOWBot
 {
     internal class Program
@@ -11,8 +12,11 @@ namespace WOWBot
         public static DiscordSocketClient client;
         static string token = File.ReadAllText("token.txt");
 
+        static CommandHandler commandHandler;
+
         static void Main(string[] args)
         {
+            commandHandler = new CommandHandler();
             MainAsyncProcess();
             while (true) ;
         }
@@ -28,6 +32,8 @@ namespace WOWBot
             client.Disconnected += ConnectionLost;
             client.Ready += BotReady;
             client.MessageReceived += NewMessage;
+            client.SlashCommandExecuted += commandHandler.CommandExecuted;
+
             //Attempt first log in
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
@@ -47,6 +53,11 @@ namespace WOWBot
         private static async Task BotReady()
         {
             Console.WriteLine("Bot Ready!");
+
+            SlashCommandProperties scp = await commandHandler.LoadCommands();
+            await client.CreateGlobalApplicationCommandAsync(scp);
+
+            Console.WriteLine("Command Registered!");
         }
 
         private static Task ConnectionLost(Exception arg) //Reconnects the bot
