@@ -16,11 +16,13 @@ namespace WOWBot
 
         public async Task<SlashCommandProperties> LoadCommands()
         {
+            //Creates the command and assigns the informaiton needed
             SlashCommandBuilder commandBuilder = new SlashCommandBuilder();
 
             commandBuilder.WithName("wow");
             commandBuilder.WithDescription("Finds a random clip of owen wilson saying WOW.");
 
+            //Builds it to be added
             SlashCommandProperties scp = commandBuilder.Build();
 
             return scp;
@@ -28,7 +30,8 @@ namespace WOWBot
 
         public async Task<Task> CommandExecuted(SocketSlashCommand arg)
         {
-            arg.RespondAsync("Working Command");
+            Wow responseWow = WowFetcher.GetWow(); // Gets a wow from the API
+            arg.RespondAsync("Working Command"); //Temp line, for command testing
             return Task.CompletedTask;
         }
     }
