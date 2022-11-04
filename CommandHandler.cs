@@ -30,11 +30,18 @@ namespace WOWBot
 
         public async Task<Task> CommandExecuted(SocketSlashCommand arg)
         {
+            await DoAction(arg);
+
+            return Task.CompletedTask;
+        }
+
+        public async Task<Task> DoAction(SocketSlashCommand arg)
+        {
             List<Wow> responseWow = WowFetcher.GetWow(); // Gets a wow from the API
 
             string url = Shortener.ShortenUrl(responseWow[0].video._1080p);
 
-            await arg.RespondAsync(url);
+            arg.RespondAsync(url);
 
             return Task.CompletedTask;
         }
