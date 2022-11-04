@@ -30,8 +30,17 @@ namespace WOWBot
 
         public async Task<Task> CommandExecuted(SocketSlashCommand arg)
         {
-            Wow responseWow = WowFetcher.GetWow(); // Gets a wow from the API
-            arg.RespondAsync("Working Command"); //Temp line, for command testing
+            List<Wow> responseWow = WowFetcher.GetWow(); // Gets a wow from the API
+
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.WithTitle($"{responseWow[0].character} in {responseWow[0].movie}");
+            //eb.WithUrl(responseWow[0].video._1080p);
+            eb.WithDescription(responseWow[0].video._1080p);
+
+            Embed e = eb.Build();
+
+            arg.RespondAsync(embed: e);
+
             return Task.CompletedTask;
         }
     }

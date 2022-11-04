@@ -5,7 +5,7 @@ using System.Text;
 namespace WOWBot
 {
 
-    public class APIResponse
+    public class Wow
     {
         public string movie { get; set; }
         public int year { get; set; }
@@ -24,10 +24,10 @@ namespace WOWBot
 
     public class Video
     {
-        public Uri _1080p { get; set; }
-        public Uri _720p { get; set; }
-        public Uri _480p { get; set; }
-        public Uri _360p { get; set; }
+        public string _1080p { get; set; }
+        public string _720p { get; set; }
+        public string _480p { get; set; }
+        public string _360p { get; set; }
     }
 
 }
